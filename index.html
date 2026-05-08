@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports Turf Hub | Premium Futuristic Management</title>
+    <meta name="description" content="All-in-one sports turf management platform with futuristic tools and interactive physics.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Loading Animation -->
+    <div id="loader" class="loader-wrapper">
+        <div class="loader-content">
+            <div class="loader-circle"></div>
+            <span class="loader-text">INITIALIZING SYSTEMS...</span>
+        </div>
+    </div>
+
+    <!-- Background Canvas for Physics/Particles -->
+    <div id="physics-container"></div>
+
+    <!-- Animated Navbar -->
+    <nav id="navbar" class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-field-hockey-stick-ball"></i>
+                <span>SPORTS TURF <span class="accent-text">HUB</span></span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#tools" class="nav-link">Tools</a></li>
+                <li><a href="#tournament" class="nav-link">Tournament</a></li>
+                <li><a href="#scoreboard" class="nav-link">Scoreboard</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <button class="btn btn-neon">GET STARTED</button>
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero section">
+            <div class="hero-content">
+                <h1 class="glitch-text" data-text="All In One Sports Turf Management Platform">All In One Sports Turf Management Platform</h1>
+                <p class="hero-subtitle">Optimize your arena with next-gen analytics, automated scheduling, and professional-grade sports utilities. The future of turf management is here.</p>
+                <div class="hero-btns">
+                    <button class="btn btn-primary" id="gravity-trigger">EXPLORE TOOLS</button>
+                    <button class="btn btn-outline">WATCH DEMO</button>
+                </div>
+            </div>
+            
+            <div class="floating-elements">
+                <div class="float-item item-1"><i class="fas fa-football"></i></div>
+                <div class="float-item item-2"><i class="fas fa-basketball"></i></div>
+                <div class="float-item item-3"><i class="fas fa-soccer-ball"></i></div>
+            </div>
+        </section>
+
+        <!-- Tools Section -->
+        <section id="tools" class="section">
+            <div class="section-header">
+                <h2 class="section-title">Futuristic <span class="accent-text">Tools</span></h2>
+                <p class="section-desc">Powerful utilities designed for precision and performance.</p>
+            </div>
+            
+            <div class="tools-grid">
+                <!-- Turf Size Calculator -->
+                <div class="tool-card glass-card physics-element">
+                    <div class="tool-icon"><i class="fas fa-ruler-combined"></i></div>
+                    <h3>Turf Size Calculator</h3>
+                    <div class="tool-inputs">
+                        <input type="number" id="turf-length" placeholder="Length (m)">
+                        <input type="number" id="turf-width" placeholder="Width (m)">
+                    </div>
+                    <button class="btn btn-sm btn-neon" onclick="calculateTurf()">Calculate</button>
+                    <div id="turf-result" class="tool-result"></div>
+                </div>
+
+                <!-- Match Cost Splitter -->
+                <div class="tool-card glass-card physics-element">
+                    <div class="tool-icon"><i class="fas fa-file-invoice-dollar"></i></div>
+                    <h3>Match Cost Splitter</h3>
+                    <div class="tool-inputs">
+                        <input type="number" id="total-cost" placeholder="Total Cost">
+                        <input type="number" id="player-count" placeholder="No. of Players">
+                    </div>
+                    <button class="btn btn-sm btn-neon" onclick="splitCost()">Split</button>
+                    <div id="cost-result" class="tool-result"></div>
+                </div>
+
+                <!-- Tournament Generator -->
+                <div id="tournament" class="tool-card glass-card physics-element wide-card">
+                    <div class="tool-icon"><i class="fas fa-sitemap"></i></div>
+                    <h3>Tournament Generator</h3>
+                    <div class="tool-inputs">
+                        <input type="text" id="teams-list" placeholder="Team names (comma separated)">
+                    </div>
+                    <button class="btn btn-sm btn-neon" onclick="generateTournament()">Generate Brackets</button>
+                    <div id="tournament-result" class="bracket-container"></div>
+                </div>
+
+                <!-- Live Scoreboard -->
+                <div id="scoreboard" class="tool-card glass-card physics-element">
+                    <div class="tool-icon"><i class="fas fa-tv"></i></div>
+                    <h3>Live Match Scoreboard</h3>
+                    <div class="scoreboard-ui">
+                        <div class="team-score">
+                            <input type="text" value="Team A" class="team-name">
+                            <div class="score-controls">
+                                <button onclick="updateScore('a', -1)">-</button>
+                                <span id="score-a">0</span>
+                                <button onclick="updateScore('a', 1)">+</button>
+                            </div>
+                        </div>
+                        <div class="vs">VS</div>
+                        <div class="team-score">
+                            <input type="text" value="Team B" class="team-name">
+                            <div class="score-controls">
+                                <button onclick="updateScore('b', -1)">-</button>
+                                <span id="score-b">0</span>
+                                <button onclick="updateScore('b', 1)">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="match-timer">
+                        <span id="timer-display">00:00</span>
+                        <div class="timer-controls">
+                            <button onclick="toggleTimer()" id="timer-btn"><i class="fas fa-play"></i></button>
+                            <button onclick="resetTimer()"><i class="fas fa-undo"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fitness Calculator -->
+                <div class="tool-card glass-card physics-element">
+                    <div class="tool-icon"><i class="fas fa-heartbeat"></i></div>
+                    <h3>Fitness / BMI</h3>
+                    <div class="tool-inputs">
+                        <input type="number" id="height" placeholder="Height (cm)">
+                        <input type="number" id="weight" placeholder="Weight (kg)">
+                    </div>
+                    <button class="btn btn-sm btn-neon" onclick="calculateBMI()">Analyze</button>
+                    <div id="bmi-result" class="tool-result"></div>
+                </div>
+
+                <!-- Team Name Generator -->
+                <div class="tool-card glass-card physics-element">
+                    <div class="tool-icon"><i class="fas fa-users-gear"></i></div>
+                    <h3>Team Name Generator</h3>
+                    <button class="btn btn-sm btn-neon" onclick="generateTeamName()">Generate</button>
+                    <div id="team-name-result" class="tool-result"></div>
+                </div>
+
+                <!-- Weather Widget -->
+                <div class="tool-card glass-card physics-element">
+                    <div class="tool-icon"><i class="fas fa-cloud-sun"></i></div>
+                    <h3>Weather Widget</h3>
+                    <div id="weather-display" class="weather-info">
+                        <span class="temp">28°C</span>
+                        <span class="condition">Perfect for Match</span>
+                        <span class="location">London, UK</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="section">
+            <div class="features-grid">
+                <div class="feature-card glass-card">
+                    <i class="fas fa-bolt"></i>
+                    <h4>Fast Calculations</h4>
+                    <p>Real-time data processing for instant results.</p>
+                </div>
+                <div class="feature-card glass-card">
+                    <i class="fas fa-microchip"></i>
+                    <h4>Smart Tools</h4>
+                    <p>AI-powered tournament and cost algorithms.</p>
+                </div>
+                <div class="feature-card glass-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h4>Responsive Design</h4>
+                    <p>Seamless experience across all devices.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section about-section">
+            <div class="about-content glass-card">
+                <h2>About <span class="accent-text">Sports Turf Hub</span></h2>
+                <p>We are the pinnacle of sports management technology. Our platform provides turf owners and sports enthusiasts with a comprehensive suite of tools to manage, organize, and analyze matches with surgical precision. From local tournaments to professional leagues, we bring futuristic solutions to the grass roots.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <span>SPORTS TURF <span class="accent-text">HUB</span></span>
+            </div>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Support</a>
+            </div>
+            <div class="footer-social">
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div>
+            <p class="copyright">&copy; 2026 Sports Turf Hub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
